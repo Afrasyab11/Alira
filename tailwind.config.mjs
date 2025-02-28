@@ -12,6 +12,7 @@ export default {
         "custom-shadow": "0px 0px 10px 3px #F9F9F980",
         "price-white-shadow": "0px 0px 10px 3px #F9F9F980",
         "tab-shadow": "0px 0px 2.39px 0px #0000001A inset",
+        'nav': '0 8px 15px rgba(0, 0, 0, 0.2), 0 4px 6px rgba(0, 0, 0, 0.1)',
       },
       screens: {
         sm: "320px",
