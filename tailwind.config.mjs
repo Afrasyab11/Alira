@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: "class",
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,6 +13,7 @@ export default {
         "custom-shadow": "0px 0px 10px 3px #F9F9F980",
         "price-white-shadow": "0px 0px 10px 3px #F9F9F980",
         "tab-shadow": "0px 0px 2.39px 0px #0000001A inset",
+        "chat-button-shadow":"2px 4px 12px 0px #00000014"
       },
       screens: {
         sm: "320px",

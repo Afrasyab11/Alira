@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { FaQuoteLeft } from "react-icons/fa";
 
 import "swiper/css";
 import "swiper/css/navigation";

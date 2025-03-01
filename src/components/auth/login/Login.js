@@ -1,10 +1,13 @@
+"use client";
 import { Icons } from "@/assets/Icons";
 import Image from "next/image";
 import Typography from "@/common/Typography";
 import InputField from "@/common/Inputs/Inputs";
 import Button from "@/common/Button";
 import Link from "next/link";
-export const Login = ({setType}) => {
+import { useRouter } from "next/navigation";
+export const Login = ({ setType }) => {
+  const router = useRouter();
   return (
     <>
       <div className="bg-light flex justify-center items-center  min-h-screen">
@@ -16,8 +19,16 @@ export const Login = ({setType}) => {
             <Typography variant="p">Sign up to continue</Typography>
           </div>
           <div className="flex gap-x-3 justify-center">
-            <Image src={Icons?.google} alt="google" className="h-auto w-auto cursor-pointer" />
-            <Image src={Icons?.apple} alt="apple" className="h-auto w-auto cursor-pointer" />
+            <Image
+              src={Icons?.google}
+              alt="google"
+              className="h-auto w-auto cursor-pointer"
+            />
+            <Image
+              src={Icons?.apple}
+              alt="apple"
+              className="h-auto w-auto cursor-pointer"
+            />
           </div>
           <div className="flex justify-center items-center gap-x-3 text-[#A0A0A0]">
             <span className="border-t-[2px] border-[#A0A0A0] w-16"></span>
@@ -31,7 +42,11 @@ export const Login = ({setType}) => {
           </div>
           <div className="flex flex-col ">
             <div className="mt-5 w-full">
-              <Button label="Login" onClick={setType} className="w-full bg-blue" />
+              <Button
+                label="Login"
+                onClick={() => router.push("/main/chat")}
+                className="w-full bg-blue"
+              />
             </div>
             <div className="flex justify-center gap-x-2 mt-5">
               <p className="text-[#A0A0A0]">Already have an account?</p>
