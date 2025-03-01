@@ -22,3 +22,6 @@ body {
 .swiper-button-prev, .swiper-button-next{
   color:#A0A0A08A !important
 }
+html {
+  scroll-behavior: smooth;
+}

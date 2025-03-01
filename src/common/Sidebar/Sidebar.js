@@ -42,8 +42,7 @@ const Sidebar = () => {
   useEffect(() => {
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth >= 768) setIsOpen(true);
-      else setIsOpen(false);
+      setIsOpen(window.innerWidth >= 768);
     };
     checkScreenSize();
     window.addEventListener("resize", checkScreenSize);
@@ -62,7 +61,7 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile Header (Only on small screens) */}
-      {isMobile && !isOpen && (
+      {isMobile && (
         <div className="dark:bg-[#363536] bg-white py-3 px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
           <button onClick={toggleSidebar} className="text-xl">
             <Image src={Icons?.menu} alt="menu" className="h-auto w-auto" />
@@ -79,7 +78,7 @@ const Sidebar = () => {
       <div
         className={`fixed top-0 left-0 min-h-screen h-full flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-50 
           ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-          md:translate-x-0 md:w-72 md:static w-72 px-6 py-4`}
+          lg:translate-x-0 lg:w-72 lg:static w-72 px-6 py-4`}
       >
         {/* Close Button (Inside Sidebar on Mobile) */}
         {isMobile && (
@@ -156,7 +155,7 @@ const Sidebar = () => {
       {/* Overlay for mobile */}
       {isMobile && isOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          className="fixed inset-0 z-40"
           onClick={toggleSidebar}
         ></div>
       )}
