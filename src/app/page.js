@@ -11,7 +11,7 @@ export default function Home() {
        <AIAgent/>
        <WhatAliraDo/>
        <Price/>
-       {/* <Testimonials/> */}
+       <Testimonials/>
       </main>
     </div>
   )

@@ -32,42 +32,58 @@ export default function Testimonials() {
   const projectCards = [
     {
       id: 1,
-      title: "Detatched House",
-      image: "/placeholder.svg?height=200&width=300",
+      title: "“",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      name: " Katty koew",
+      designation: "Founder and CEO OF January ",
     },
     {
       id: 2,
-      title: "Detatched House",
-      image: "/placeholder.svg?height=200&width=300",
+      title: "“",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      name: " Katty koew",
+      designation: "Founder and CEO OF January ",
     },
     {
       id: 3,
-      title: "Detatched House",
-      image: "/placeholder.svg?height=200&width=300",
+      title: "“",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      name: " Katty koew",
+      designation: "Founder and CEO OF January ",
     },
     {
       id: 4,
-      title: "Detatched House",
-      image: "/placeholder.svg?height=200&width=300",
+      title: "“",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      name: " Katty koew",
+      designation: "Founder and CEO OF January ",
     },
     {
       id: 5,
-      title: "Detatched House",
-      image: "/placeholder.svg?height=200&width=300",
+      title: "“",
+      description:
+        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+      name: " Katty koew",
+      designation: "Founder and CEO OF January ",
     },
   ];
 
   return (
-    <div className="px-4 py-8 bg-white">
-      <h1 className="text-3xl font-bold text-center mb-8">Project Reports</h1>
+    <div className="sm:px-3 xl:px-24 py-20 bg-white">
+      <h1 className="text-3xl font-bold text-center mb-8">Testimonials</h1>
       <div className="relative grid grid-cols-1">
         <Swiper
           cssMode={true}
+          pagination={{ el: ".swiper-pagination", clickable: true }}
           // slidesPerView={3}
           spaceBetween={30}
           freeMode={true}
           mousewheel={true}
-          modules={[Autoplay, FreeMode, Mousewheel, Navigation]}
+          modules={[Autoplay, FreeMode, Mousewheel,Pagination, Navigation]}
           keyboard={{ enabled: true }}
           // spaceBetween={20}
           slidesPerView={1}
@@ -82,59 +98,32 @@ export default function Testimonials() {
             1024: {
               slidesPerView: 3,
             },
+            1440: {
+              slidesPerView: 3,
+            },
           }}
           className="swiper-container !mx-12"
         >
           {projectCards.map((card, index) => (
             <SwiperSlide key={card.id} className="max-w-sm shadow-md">
-              <div className="bg-white rounded-lg">
-                {/* <Image
-                  src={icons?.house}
-                  alt="house"
-                  className="w-full object-cover"
-                /> */}
-                <div className="p-4">
-                  <h2 className="text-xl font-semibold mb-4">{card.title}</h2>
-                  {[
-                    "Purchase Price",
-                    "Market Value",
-                    "Energy Efficiency",
-                    "Return on Equity",
-                  ].map((section) => (
-                    <div key={section} className="mb-2">
-                      <button
-                        onClick={() => toggleSection(index, section)}
-                        className="flex items-center justify-between w-full text-left text-gray-600 hover:text-gray-800"
-                      >
-                        <span>{section}</span>
-                        {/* {expandedSections[`${index}-${section}`] ? (
-                          <ChevronUp size={20} />
-                        ) : (
-                          <ChevronDown size={20} />
-                        )} */}
-                      </button>
-                      {expandedSections[`${index}-${section}`] && (
-                        <div className="mt-2 text-sm text-gray-500">
-                          Details for {section}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                  <button className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300">
-                    View Complete Report
-                  </button>
+              <div className="bg-[#F2F2F2] sm:p-3 md:p-4 min-h-[70vh] flex flex-col justify-between relative rounded-lg">
+                <p className=" text-6xl text-black font-extrabold">
+                  {card?.title}
+                </p>
+                <p className="text-sm md:text-[16px] leading-8 px-3 text-black ">
+                  {card?.description}
+                </p>
+                <div className=" flex flex-col gap-y-2 px-3">
+                  <p className="text-[#454545] text-md ">{card?.name}</p>
+                  <p className="text-[#454545] text-sm ">{card?.designation}</p>
                 </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
-        <div className="swiper-button-prev !left-0"></div>
-        <div className="swiper-button-next !right-0"></div>
-      </div>
-      <div className="pl-16 mt-8">
-        <button className="bg-gray-800 text-white py-2 px-6 rounded hover:bg-gray-700 transition duration-300">
-          Back
-        </button>
+        <div className="swiper-pagination !relative space-x-4 !mt-2 "></div>
+        <div className="swiper-button-prev text-[#A0A0A08A] !left-0 sm:!hidden md:block"></div>
+        <div className="swiper-button-next !right-0 sm:!hidden md:block"></div>
       </div>
     </div>
   );

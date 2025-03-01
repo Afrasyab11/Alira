@@ -15,12 +15,12 @@ export function Navbar() {
     <header className="sticky left-0 right-0 top-0 z-50 bg-white shadow-md">
       <nav className="mx-auto flex h-[72px] items-center justify-between sm:px-3 md:px-10">
         {/* Mobile: Menu Icon on Left */}
-        <button onClick={toggleMenu} className="md:hidden">
+        <button onClick={toggleMenu} className="lg:hidden">
           <Image src={Icons.menu} alt="menu" className="h-6 w-6 cursor-pointer" />
         </button>
 
         {/* Logo */}
-        <div className="md:static md:flex md:items-center sm:ps-0 md:ps-20">
+        <div className="lg:static lg:flex md:items-center sm:ps-0 xl:ps-20">
           <Image
             src={Icons.alira}
             alt="logo"
@@ -29,7 +29,7 @@ export function Navbar() {
         </div>
 
         {/* Desktop Menu: Centered */}
-        <div className="hidden md:flex items-center gap-x-16 absolute left-1/2 transform -translate-x-1/2">
+        <div className="hidden lg:flex items-center gap-x-16 absolute left-1/2 transform -translate-x-1/2">
           {["Core Features", "Pricing Plans", "Testimonials", "Contact Us"].map(
             (item, index) => (
               <Link
