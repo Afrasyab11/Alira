@@ -122,8 +122,8 @@ export default function Testimonials() {
           ))}
         </Swiper>
         <div className="swiper-pagination !relative space-x-4 !mt-2 "></div>
-        <div className="swiper-button-prev text-[#A0A0A08A] !left-0 sm:!hidden md:block"></div>
-        <div className="swiper-button-next !right-0 sm:!hidden md:block"></div>
+        <div className="swiper-button-prev text-[#A0A0A08A] !left-0 sm:!hidden md:!block"></div>
+        <div className="swiper-button-next !right-0 sm:!hidden md:!block"></div>
       </div>
     </div>
   );
