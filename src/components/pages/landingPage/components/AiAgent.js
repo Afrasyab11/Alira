@@ -11,11 +11,11 @@ export const AIAgent = () => {
         <div className="pt-36 bg-cover bg-center bg-[url('/background.svg')]">
           <div className="flex flex-col space-y-8">
             <div className="flex flex-col justify-center items-center">
-              <p className="sm:text-3xl text-[#454545] text-center font-medium md:text-4xl">Your AI Agent for</p>
-              <p className="sm:text-3xl text-[#454545] text-center font-medium md:text-4xl">Australian Real Estate</p>
+              <p className="sm:text-3xl text-[#363536] text-center font-medium md:text-4xl">Your AI Agent for</p>
+              <p className="sm:text-3xl text-[#363536] text-center font-medium md:text-4xl">Australian Real Estate</p>
             </div>
             <div className="w-full sm:px-14 md:px-0 text-center">
-              <p className="text-md text-[#454545]">
+              <p className="text-md text-[#363536]">
                 Streamline, automate, and elevate your real estate business with
                 cutting-edge AI
               </p>
@@ -38,7 +38,7 @@ export const AIAgent = () => {
         <div className="bg-white">
           <div className="flex justify-center sm:px-16 sm:py-12 md:py-40">
             <div className="max-w-xl">
-              <p className="sm:text-lg md:text-xl sm:font-medium md:font-semibold sm:leading-6 md:leading-7">
+              <p className="sm:text-lg text-black md:text-xl sm:font-medium md:font-semibold sm:leading-6 md:leading-7">
                 Alira is an AI-powered virtual assistant for Australian real
                 estate agents, automating contract management, client
                 communication, scheduling, marketing, and data analysis to
