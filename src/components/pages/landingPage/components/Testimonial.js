@@ -74,7 +74,7 @@ export default function Testimonials() {
 
   return (
     <div className="sm:px-3 xl:px-24 py-20 bg-white">
-      <h1 className="text-3xl font-bold text-center mb-8">Testimonials</h1>
+      <h1 className="text-3xl font-bold text-center mb-8 text-black">Testimonials</h1>
       <div className="relative grid grid-cols-1">
         <Swiper
           cssMode={true}
