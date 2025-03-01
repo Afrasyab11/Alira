@@ -16,7 +16,9 @@ import setting from "./svg/setting.svg";
 import close from "./svg/close.svg"
 import menu from "./svg/menu.svg"
 import send from "./svg/send.svg"
+import sun from "./svg/sun.svg"
 export const Icons = {
+  sun,
   send,
   close,
   menu,

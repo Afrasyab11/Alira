@@ -34,23 +34,7 @@ export default function SmoothTabs({ tabs, defaultTab = 0, className = "" }) {
           ))}
         </div>
       </div>
-      <div className="relative">
-        {tabs.map((tab, index) => (
-          <div
-            key={index}
-            className={`
-              absolute w-full transition-all duration-300 ease-out
-              ${
-                activeTab === index
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-4 pointer-events-none"
-              }
-            `}
-          >
-            {tab.content}
-          </div>
-        ))}
-      </div>
+     
     </>
   );
 }
