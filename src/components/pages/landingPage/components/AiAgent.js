@@ -1,18 +1,27 @@
+"use client"
 import { Icons } from "@/assets/Icons";
 import bg from "./../../../../assets/svg/background.svg";
 import Typography from "@/common/Typography";
 import Button from "@/common/Button";
 import Image from "next/image";
-
+import { motion } from "framer-motion";
 export const AIAgent = () => {
   return (
     <>
-      <div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 3 }}
+      >
         <div className="pt-36 bg-cover bg-center bg-[url('/background.svg')]">
           <div className="flex flex-col space-y-8">
             <div className="flex flex-col justify-center items-center">
-              <p className="sm:text-3xl text-[#363536] text-center font-medium md:text-4xl">Your AI Agent for</p>
-              <p className="sm:text-3xl text-[#363536] text-center font-medium md:text-4xl">Australian Real Estate</p>
+              <p className="sm:text-3xl text-[#363536] text-center font-medium md:text-4xl">
+                Your AI Agent for
+              </p>
+              <p className="sm:text-3xl text-[#363536] text-center font-medium md:text-4xl">
+                Australian Real Estate
+              </p>
             </div>
             <div className="w-full sm:px-14 md:px-0 text-center">
               <p className="text-md text-[#363536]">
@@ -62,7 +71,7 @@ export const AIAgent = () => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

@@ -9,7 +9,7 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState([
     {
       id: "1",
-      content: "👋 Hey John, how can I help you?",
+      content: " 👋 Hey John, how can I help you?",
       sender: "assistant",
       timestamp: new Date(),
     },
@@ -67,11 +67,13 @@ export default function ChatInterface() {
         ref={chatContainerRef}
         className="flex-1 overflow-y-auto p-4 space-y-10"
       >
-        <div className="flex justify-center">
-          <h2 className="sm:text-md md:text-3xl text-black dark:text-white font-semibold mb-4">
-            👋 Hey John, how can I help you?
-          </h2>
-        </div>
+        {messages.length === 1 && (
+          <div className="flex justify-center">
+            <h2 className="sm:text-md md:text-3xl text-black dark:text-white font-semibold mb-4">
+              👋 Hey John, how can I help you?
+            </h2>
+          </div>
+        )}
 
         <div className="w-full hidden md:block">
           {messages.length === 1 && (
@@ -106,11 +108,10 @@ export default function ChatInterface() {
             </div>
           )}
         </div>
-
         <div
           ref={chatContainerRef}
           id="chatContainer"
-          className="flex flex-col h-[37vh] overflow-y-scroll scrollbar-hide sm:px-2 md:px-40"
+          className="flex flex-col h-[34vh] overflow-y-scroll scrollbar-hide sm:px-2 md:px-40"
         >
           {messages?.map((message) => (
             <div
@@ -136,7 +137,6 @@ export default function ChatInterface() {
           {/* Empty div to ensure scrolling works */}
           <div ref={messagesEndRef} />
         </div>
-
         {isLoading && (
           <div className="flex justify-start px-40">
             <div className="bg-gray-800 rounded-2xl px-4 py-3 max-w-[80%]">
@@ -150,15 +150,15 @@ export default function ChatInterface() {
         )}
       </div>
 
-      <div className="p-4 flex justify-center w-full gap-x-3 sm:px-2 md:px-40">
+      <div className="p-2 flex justify-center w-full gap-x-3 sm:px-2 md:px-40">
         <div className="flex items-center gap-x-3 w-full rounded-full px-4">
           <input
             type="text"
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Let's talk real estate..."
-            className="flex-1 rounded-full bg-white text-black py-3 px-3 border-[1px] border-[#E2E8F0] dark:text-white dark:bg-[#171717] dark:border-[1px] dark:border-[#444649] focus:outline-none"
+            placeholder="Ask Anything"
+            className="flex-1 rounded-full bg-white text-black py-3 px-4 border-[1px] border-[#E2E8F0] dark:text-white dark:bg-[#171717] dark:border-[1px] dark:border-[#444649] focus:outline-none"
           />
           <button
             onClick={handleSendMessage}
@@ -177,6 +177,7 @@ export default function ChatInterface() {
           </button>
         </div>
       </div>
+        <p className="dark:text-white text-dark text-center text-sm">Alira can make mistakes. Please verify important information.</p>
     </div>
   );
 }

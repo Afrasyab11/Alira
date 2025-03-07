@@ -10,12 +10,25 @@ import { Icons } from "@/assets/Icons";
 import { IoMoonOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { PiBrain } from "react-icons/pi";
+import { FaChevronCircleLeft } from "react-icons/fa";
 
 const Sidebar = () => {
   const pathName = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [theme, setTheme] = useState("light");
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.matchMedia("(max-width: 1024px)").matches) {
+        setIsMobile(true);
+      }
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const categories = [
     {
@@ -57,7 +70,6 @@ const Sidebar = () => {
     document.documentElement.classList.toggle("dark", newTheme === "dark");
   };
 
-
   return (
     <>
       {/* Mobile Header (Only on small screens) */}
@@ -66,21 +78,30 @@ const Sidebar = () => {
           <button onClick={toggleSidebar} className="text-xl">
             <Image src={Icons?.menu} alt="menu" className="h-auto w-auto" />
           </button>
-          <span className="text-2xl font-semibold text-[#454545] dark:text-white">
-            alira
-          </span>
-          <span className="text-2xl font-semibold text-[#454545] dark:text-white">
-          </span>
+          <Image src={Icons?.alira} alt="logo" className="h-auto w-auto dark:invert" />
         </div>
       )}
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 min-h-screen h-full flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-50 
-          ${isOpen ? "translate-x-0" : "-translate-x-full"} 
-          lg:translate-x-0 lg:w-72 lg:static w-72 px-6 py-4`}
+        className={`sm:fixed md:fixed lg:relative top-0 left-0 min-h-screen h-full  flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-50 
+          ${
+            isOpen
+              ? "sm:w-0 md:w-0 lg:w-0 xl:w-[70px] translate-x-0"
+              : "w-[270px] px-6"
+          }
+       ${isOpen && "xl:translate-x-0"} xl:w-[250px]`}
       >
-        {/* Close Button (Inside Sidebar on Mobile) */}
+        <FaChevronCircleLeft
+        size={30}
+          onClick={(e) => {
+            e.stopPropagation();
+            toggleSidebar();
+            // onMenuClick();
+          }}
+          alt="logo"
+          className=" absolute dark:text-white text-black -right-[13px] cursor-pointer hidden lg:block"
+        />
         {isMobile && (
           <button
             onClick={toggleSidebar}
@@ -92,11 +113,11 @@ const Sidebar = () => {
 
         {/* Logo */}
         {!isMobile && (
-          <div className="h-14 flex items-center justify-center">
-            <span className="text-2xl font-semibold text-[#454545] dark:text-white">
-              alira
-            </span>
-          </div>
+          <Image
+            src={Icons?.alira}
+            alt="logo"
+            className={` dark:invert ${!isOpen ? "h-8 flex justify-center w-full mt-4":" h-6 w-full ms-2 max-w-12  flex justify-center mt-8"}`}
+          />
         )}
 
         {/* Navigation */}
@@ -105,28 +126,32 @@ const Sidebar = () => {
             <Link
               key={index}
               href={item?.link}
-              className={`flex items-center gap-x-3  dark:text-white bg-white dark:bg-[#333333]  px-6 py-4 rounded-full shadow:links-light-shadow dark:shadow-logout-them transition-all duration-300 ${
+              className={`flex items-center gap-x-3  dark:text-white bg-white dark:bg-[#333333] transition-all duration-300  ${
                 pathName.includes(item.link)
                   ? "!bg-[#292929] dark:text-white text-white"
                   : "dark:bg-[#333333] dark:text-white text-black"
+              } ${
+                !isOpen ?
+                "  px-6 py-4 rounded-full shadow:links-light-shadow dark:shadow-logout-them":"flex justify-center"
               }`}
               onClick={() => setIsOpen(false)}
             >
-              <div className="p-[5px] rounded-xl w-8 h-8 grid place-items-center">
-                {item?.icon}
+              <div
+                className={`p-[5px] rounded-xl`}
+              >
+               <span className={`  ${!isOpen ? "w-8 h-8 ":"w-20 h-20"}`}>{item?.icon}</span>
               </div>
-              {/* <BsChatDotsFill
-              className="text-dark dark:text-white w-6 h-6 mr-3"
-              size={18}
-            /> */}
-              <span className="text-base font-medium">{item?.name}</span>
+
+              <span className={`text-base font-medium ${isOpen && "hidden"}`}>
+                {item?.name}
+              </span>
             </Link>
           ))}
         </div>
 
         {/* Bottom Icons */}
         <div className="mt-auto flex flex-col space-y-8">
-        <button
+          <button
             onClick={toggleTheme}
             className="sm:ps-3 sm:py-2 md:p-4 rounded-full bg-white dark:bg-[#333333] shadow-logout-them flex items-center gap-x-4 sm:w-full  md:w-fit"
           >
@@ -143,7 +168,10 @@ const Sidebar = () => {
               Light Mode
             </small>
           </button>
-          <Link href={"/"} className="sm:ps-3 sm:py-2 md:p-4 rounded-full bg-white dark:bg-[#333333] shadow-logout-them flex items-center gap-x-4 sm:w-full  md:w-fit">
+          <Link
+            href={"/"}
+            className="sm:ps-3 sm:py-2 md:p-4 rounded-full bg-white dark:bg-[#333333] shadow-logout-them flex items-center gap-x-4 sm:w-full  md:w-fit"
+          >
             <MdOutlineLogout className="text-black dark:text-white" size={30} />
             <small className="sm:block md:hidden text-dark dark:text-white font-medium">
               Logout
@@ -154,10 +182,7 @@ const Sidebar = () => {
 
       {/* Overlay for mobile */}
       {isMobile && isOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={toggleSidebar}
-        ></div>
+        <div className="fixed inset-0 z-40" onClick={toggleSidebar}></div>
       )}
     </>
   );
