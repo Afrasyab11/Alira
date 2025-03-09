@@ -139,11 +139,11 @@ export default function ChatInterface() {
         </div>
         {isLoading && (
           <div className="flex justify-start px-40">
-            <div className="bg-gray-800 rounded-2xl px-4 py-3 max-w-[80%]">
+            <div className="bg-white dark:bg-transparent rounded-2xl px-4 py-3 max-w-[80%]">
               <div className="flex space-x-1">
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse"></div>
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse delay-150"></div>
-                <div className="w-2 h-2 bg-gray-500 rounded-full animate-pulse delay-300"></div>
+                <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse"></div>
+                <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse delay-150"></div>
+                <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse delay-300"></div>
               </div>
             </div>
           </div>
