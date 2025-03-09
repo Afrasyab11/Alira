@@ -177,7 +177,7 @@ export default function ChatInterface() {
           </button>
         </div>
       </div>
-        <p className="dark:text-white text-dark text-center text-sm">Alira can make mistakes. Please verify important information.</p>
+        <p className="dark:text-white text-dark text-center text-sm sm:px-6 md:px-0">Alira can make mistakes. Please verify important information.</p>
     </div>
   );
 }

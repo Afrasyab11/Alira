@@ -19,12 +19,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1024) {
-        setIsMobile(true);
-      }
-      // if (window.matchMedia("(max-width: 1024px)").matches) {
-      //   setIsMobile(true);
-      // }
+      setIsMobile(window.innerWidth <= 768);
     };
 
     handleResize();
@@ -54,17 +49,11 @@ const Sidebar = () => {
     document.documentElement.classList.toggle("dark", storedTheme === "dark");
   }, []);
 
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsMobile(window.innerWidth <= 768);
-      setIsOpen(window.innerWidth >= 768);
-    };
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+  const toggleSidebar = (e) => {
+    e.stopPropagation();
+    setIsOpen((prev) => !prev);
+  };
 
-  const toggleSidebar = () => setIsOpen(!isOpen);
   const toggleTheme = () => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
@@ -93,20 +82,18 @@ const Sidebar = () => {
 
       {/* Sidebar */}
       <div
-        className={`sm:fixed md:fixed lg:relative top-0 left-0 min-h-screen h-full  flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-50 
-          ${isOpen ? "w-0 xl:w-[70px] translate-x-0" : "w-[270px] px-6"}
-       ${isOpen && "xl:translate-x-0"} xl:w-[250px]`}
+        onClick={(e) => e.stopPropagation()}
+        className={`sm:fixed md:fixed lg:relative top-0 left-0 min-h-screen h-full flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-50 
+          ${isOpen ? "w-0 xl:w-[70px] translate-x-0" : "w-[270px] px-6"} ${
+          isOpen && "xl:translate-x-0"
+        } xl:w-[250px]`}
       >
         <FaChevronCircleLeft
           size={30}
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleSidebar();
-            // onMenuClick();
-          }}
-          alt="logo"
-          className=" absolute dark:text-white text-black top-3 -right-[13px] z-50 cursor-pointer hidden lg:block"
+          onClick={toggleSidebar}
+          className="absolute dark:text-white text-black top-3 -right-[13px] z-50 cursor-pointer hidden lg:block"
         />
+
         {isMobile && (
           <button
             onClick={toggleSidebar}
@@ -124,45 +111,44 @@ const Sidebar = () => {
             <Image
               src={Icons?.alira}
               alt="logo"
-              className={` dark:invert ${
+              className={`dark:invert ${
                 !isOpen
                   ? "h-8 flex justify-center w-full mt-4"
-                  : " h-6 w-full ms-2 max-w-12  flex justify-center mt-8"
+                  : " h-6 w-full ms-2 max-w-12 flex justify-center mt-8"
               }`}
             />
           ) : (
-            <>
-              <p className="text-3xl text-center dark:invert text-dark pt-6 cursor-default select-none">
-                a.
-              </p>
-            </>
+            <p className="text-3xl text-center dark:invert text-dark pt-6 cursor-default select-none">
+              a.
+            </p>
           ))}
 
         {/* Navigation */}
         <div className="flex flex-col flex-grow space-y-7 sm:pt-20 md:pt-20 mt-4">
-          {categories?.map((item, index) => (
+          {categories.map((item, index) => (
             <Link
               key={index}
-              href={item?.link}
-              className={`flex items-center gap-x-3  dark:text-white bg-transparent dark:bg-transparent  transition-all duration-300  ${
-                pathName.includes(item.link)
-                  ? "!bg-[#292929] dark:text-white text-white"
-                  : "dark:bg-transparent dark:text-white text-black"
-              } ${
-                !isOpen
-                  ? "  px-6 py-4 rounded-full "
-                  : "flex sm:justify-end lg:justify-center"
-              }`}
+              href={item.link}
+              className={`flex items-center gap-x-3 dark:text-white bg-transparent dark:bg-transparent transition-all duration-300 
+                ${
+                  pathName.includes(item.link)
+                    ? "!bg-[#292929] dark:text-white text-white"
+                    : "dark:bg-transparent dark:text-white text-black"
+                } 
+                ${
+                  !isOpen
+                    ? "px-6 py-4 rounded-full"
+                    : "flex sm:justify-end lg:justify-center"
+                }`}
               onClick={() => setIsOpen(false)}
             >
-              <div className={`p-[5px] rounded-xl`}>
-                <span className={`  ${!isOpen ? "w-8 h-8 " : "w-20 h-20"}`}>
-                  {item?.icon}
+              <div className="p-[5px] rounded-xl">
+                <span className={`${!isOpen ? "w-8 h-8" : "w-20 h-20"}`}>
+                  {item.icon}
                 </span>
               </div>
-
               <span className={`text-base font-medium ${isOpen && "hidden"}`}>
-                {item?.name}
+                {item.name}
               </span>
             </Link>
           ))}
@@ -171,7 +157,9 @@ const Sidebar = () => {
         {/* Bottom Icons */}
         <div
           className={`mt-auto flex flex-col space-y-8 pb-6 ${
-            isOpen ? "items-end lg:items-center" : "sm:items-end md:items-start lg:items-start xl:items-start "
+            isOpen
+              ? "items-end lg:items-center"
+              : "sm:items-end md:items-start lg:items-start xl:items-start "
           }`}
         >
           <button
@@ -210,11 +198,6 @@ const Sidebar = () => {
           </Link>
         </div>
       </div>
-
-      {/* Overlay for mobile */}
-      {isMobile && isOpen && (
-        <div className="fixed inset-0 z-40" onClick={toggleSidebar}></div>
-      )}
     </>
   );
 };
