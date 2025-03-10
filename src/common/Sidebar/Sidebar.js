@@ -13,13 +13,13 @@ import { FaChevronCircleLeft } from "react-icons/fa";
 
 const Sidebar = () => {
   const pathName = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // Collapsed by default
   const [isMobile, setIsMobile] = useState(false);
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 768); // Set mobile breakpoint
     };
 
     handleResize();
@@ -61,10 +61,23 @@ const Sidebar = () => {
     document.documentElement.classList.toggle("dark", newTheme === "dark");
   };
 
+  const handleMouseEnter = () => {
+    if (!isMobile) {
+      setIsOpen(true); // Expand sidebar on hover (only for larger screens)
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!isMobile) {
+      setIsOpen(false); // Collapse sidebar on mouse leave (only for larger screens)
+    }
+  };
+
   return (
     <>
-      {isMobile && (
-        <div className="dark:bg-[#363536] bg-white py-3 px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50">
+      {/* Header for Mobile and Medium Screens */}
+      {(isMobile || window.innerWidth <= 1024) && (
+        <div className="dark:bg-[#363536] bg-white py-3 px-4 flex justify-between items-center fixed top-0 left-0 right-0 z-40">
           <button onClick={toggleSidebar} className="text-xl">
             <Image
               src={Icons?.menu}
@@ -83,48 +96,52 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`sm:fixed md:fixed lg:relative top-0 left-0 min-h-screen h-full flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-50 
-          ${isOpen ? "w-0 xl:w-[70px] translate-x-0" : "w-[270px] px-6"} ${
-          isOpen && "xl:translate-x-0"
-        } xl:w-[250px]`}
+        onMouseEnter={!isMobile ? handleMouseEnter : undefined}
+        onMouseLeave={!isMobile ? handleMouseLeave : undefined}
+        className={`fixed lg:relative top-0 left-0 min-h-screen h-full flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-40 
+          ${
+            isMobile || window.innerWidth <= 1024
+              ? isOpen
+                ? "w-[270px] translate-x-0"
+                : "-translate-x-full"
+              : isOpen
+              ? "w-[270px]"
+              : "w-[70px]"
+          }`}
       >
-        <FaChevronCircleLeft
-          size={30}
-          onClick={toggleSidebar}
-          className="absolute dark:text-white text-black top-3 -right-[13px] z-50 cursor-pointer hidden lg:block"
-        />
-
-        {isMobile && (
+      
+        {(isMobile) && (
           <button
-            onClick={toggleSidebar}
+          onClick={toggleSidebar}
             className={`${
-              isOpen ? "hidden" : "block"
-            } absolute top-4 left-4 text-black dark:text-white`}
+              isOpen ? "block" : "hidden"
+            } absolute z-[999] top-4 left-4 text-black dark:text-white`}
           >
-            <MdClose size={24} />
+            <MdClose size={24}   onClick={toggleSidebar} />
           </button>
         )}
 
         {/* Logo */}
-        {!isMobile &&
-          (!isOpen ? (
-            <Image
-              src={Icons?.alira}
-              alt="logo"
-              className={`dark:invert ${
-                !isOpen
-                  ? "h-8 flex justify-center w-full mt-4"
-                  : " h-6 w-full ms-2 max-w-12 flex justify-center mt-8"
-              }`}
-            />
-          ) : (
-            <p className="text-3xl text-center dark:invert text-dark pt-6 cursor-default select-none">
-              a.
-            </p>
-          ))}
+        {!isMobile && !(window.innerWidth <= 1024) && (
+          <div className="flex justify-center mt-4">
+            {isOpen ? (
+              <Image
+                src={Icons?.alira}
+                alt="logo"
+                className="dark:invert h-8 w-auto"
+              />
+            ) : (
+              <Image
+                src={Icons?.darkAlira}
+                alt="logo"
+                className="dark:invert h-5 w-auto"
+              />
+            )}
+          </div>
+        )}
 
         {/* Navigation */}
-        <div className="flex flex-col flex-grow space-y-7 sm:pt-20 md:pt-20 mt-4">
+        <div className="flex flex-col flex-grow space-y-7 z-50 pt-20 px-5 mt-4">
           {categories.map((item, index) => (
             <Link
               key={index}
@@ -136,18 +153,18 @@ const Sidebar = () => {
                     : "dark:bg-transparent dark:text-white text-black"
                 } 
                 ${
-                  !isOpen
+                  isOpen
                     ? "px-6 py-4 rounded-full"
                     : "flex sm:justify-end lg:justify-center"
                 }`}
-              onClick={() => setIsOpen(false)}
+              // onClick={() => setIsOpen(false)}
             >
               <div className="p-[5px] rounded-xl">
-                <span className={`${!isOpen ? "w-8 h-8" : "w-20 h-20"}`}>
+                <span className={`${isOpen ? "w-8 h-8" : "w-20 h-20"}`}>
                   {item.icon}
                 </span>
               </div>
-              <span className={`text-base font-medium ${isOpen && "hidden"}`}>
+              <span className={`text-base font-medium ${!isOpen && "hidden"}`}>
                 {item.name}
               </span>
             </Link>
@@ -159,7 +176,7 @@ const Sidebar = () => {
           className={`mt-auto flex flex-col space-y-8 pb-6 ${
             isOpen
               ? "items-end lg:items-center"
-              : "sm:items-end md:items-start lg:items-start xl:items-start "
+              : "sm:items-end md:items-start lg:items-center xl:items-center "
           }`}
         >
           <button
@@ -177,7 +194,7 @@ const Sidebar = () => {
             )}
             <small
               className={`text-dark px-3 dark:text-white font-medium ${
-                !isOpen ? "block" : "hidden"
+                isOpen ? "block" : "hidden"
               }`}
             >
               Light Mode
@@ -190,7 +207,7 @@ const Sidebar = () => {
             <MdOutlineLogout className="text-black dark:text-white" size={25} />
             <small
               className={`text-dark px-3 dark:text-white font-medium ${
-                !isOpen ? "block" : "hidden"
+                isOpen ? "block" : "hidden"
               }`}
             >
               Logout

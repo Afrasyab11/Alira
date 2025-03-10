@@ -18,7 +18,9 @@ import menu from "./svg/menu.svg"
 import send from "./svg/send.svg"
 import sun from "./svg/sun.svg"
 import humberger from "./svg/humberger.svg"
+import darkAlira from "./svg/darkAlira.svg"
 export const Icons = {
+  darkAlira,
   humberger,
   sun,
   send,
