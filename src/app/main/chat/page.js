@@ -11,7 +11,6 @@ export default function ChatInterface() {
       id: "1",
       content: " 👋 Hey John, how can I help you?",
       sender: "assistant",
-      timestamp: new Date(),
     },
   ]);
 
@@ -27,6 +26,12 @@ export default function ChatInterface() {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // Any client-side code that uses `window` can go here
+    }
+  }, []);
+
   const handleSendMessage = () => {
     if (inputValue.trim() === "") return;
 
@@ -34,7 +39,6 @@ export default function ChatInterface() {
       id: Date.now().toString(),
       content: inputValue,
       sender: "user",
-      timestamp: new Date(),
     };
 
     setMessages((prev) => [...prev, newUserMessage]);
@@ -43,10 +47,8 @@ export default function ChatInterface() {
 
     setTimeout(() => {
       const newAssistantMessage = {
-        id: (Date.now() + 1).toString(),
         content: "How are you?",
         sender: "assistant",
-        timestamp: new Date(),
       };
 
       setMessages((prev) => [...prev, newAssistantMessage]);
@@ -177,7 +179,7 @@ export default function ChatInterface() {
           </button>
         </div>
       </div>
-        <p className="dark:text-white text-dark text-center text-sm sm:px-6 md:px-0">Alira can make mistakes. Please verify important information.</p>
+      <p className="dark:text-white text-dark text-center text-sm sm:px-6 md:px-0">Alira can make mistakes. Please verify important information.</p>
     </div>
   );
 }
