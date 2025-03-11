@@ -1,4 +1,3 @@
-"use client"
 import React from "react";
 
 const Button = ({
@@ -22,11 +21,11 @@ const Button = ({
       {/* {isLoading ? (
         <span className="loading loading-spinner   text-white  loading-md flex justify-center items-center"></span>
       ) : ( */}
-        <>
-          {" "}
-          {label}
-          {children}
-        </>
+      <>
+        {" "}
+        {label}
+        {children}
+      </>
       {/* // )} */}
     </button>
   );
@@ -50,7 +49,7 @@ export const ButtonWithIcon = ({
         title={title}
         onClick={onClick}
         className={`border-primary border-[1px] text-[16px] font-medium py-[6px]  text-primary px-2 active:bg-[#050707] hover:border-border-gray  rounded-md hover:text-white hover:bg-[#dba102] ${className}`}
-        disabled={ isLoading}
+        disabled={isLoading}
       >
         <div className="flex items-center gap-x-2">
           {" "}

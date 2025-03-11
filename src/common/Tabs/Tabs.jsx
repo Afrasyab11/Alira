@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 
 export default function SmoothTabs({ tabs, defaultTab = 0, className = "" }) {

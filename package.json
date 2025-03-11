@@ -1,27 +1,44 @@
 {
-  "name": "alira",
-  "version": "0.1.0",
+  "name": "Auth",
   "private": true,
+  "version": "0.0.0",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "framer-motion": "^12.4.10",
-    "next": "15.1.7",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.2.1",
+    "@tanstack/react-table": "^8.20.6",
+    "axios": "^1.7.9",
+    "crypto-js": "^4.2.0",
+    "framer-motion": "^12.4.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-dropzone": "^14.3.8",
-    "react-icons": "^5.5.0",
-    "swiper": "^11.2.4"
+    "react-icons": "^5.4.0",
+    "react-loading-skeleton": "^3.5.0",
+    "react-router-dom": "^7.0.2",
+    "react-select": "^5.9.0",
+    "swiper": "^11.2.5"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "eslint": "^9.22.0",
-    "eslint-config-next": "15.1.7",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "@eslint/js": "^9.15.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.22",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.12.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "vite": "^6.0.6"
   }
 }
