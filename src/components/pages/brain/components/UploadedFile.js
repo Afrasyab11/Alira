@@ -2,15 +2,12 @@
 
 import { useState } from "react"
 import { useDropzone } from "react-dropzone"
-// import { Upload, } from "lucide-react"
 import { FaUpload } from "react-icons/fa";
 export const UploadedFile = () => {
     const [recentFiles, setRecentFiles] = useState([])
   
     const onDrop = (acceptedFiles) => {
-      // Add new files to the recent files list
       setRecentFiles((prev) => [...acceptedFiles, ...prev])
-      // Switch to the recent tab to show the uploaded files
     }
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,

@@ -1,5 +1,4 @@
 "use client"
-import SmoothTabs from "@/common/Tabs/Tabs";
 import { RecentFile } from "./components/RecentFile";
 import { UploadedFile } from "./components/UploadedFile";
 import { useState } from "react";

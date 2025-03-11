@@ -9,7 +9,6 @@ import { Icons } from "@/assets/Icons";
 import { IoMoonOutline } from "react-icons/io5";
 import { usePathname } from "next/navigation";
 import { PiBrain } from "react-icons/pi";
-import { FaChevronCircleLeft } from "react-icons/fa";
 
 const Sidebar = () => {
   const pathName = usePathname();
@@ -18,6 +17,7 @@ const Sidebar = () => {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768); // Set mobile breakpoint
     };
@@ -25,6 +25,7 @@ const Sidebar = () => {
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
+  }
   }, []);
 
   const categories = [

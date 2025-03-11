@@ -3,9 +3,12 @@ import FileUploadComp from "@/components/pages/brain";
 import { SocialIntegration } from "@/components/pages/brain/components/Socialintegration";
 import { DataSource } from "@/components/pages/brain/components/DataSource";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
+
 const Brain = () => {
   const [activeTab, setActiveTab] = useState(0);
+    const [isClient, setIsClient] = useState(false);
+  
   const tabItems = [
     {
       label: "File Upload",
@@ -20,8 +23,17 @@ const Brain = () => {
       content: <DataSource />,
     },
   ];
+
+ useEffect(() => {
+     if (typeof window !== "undefined") {
+       setIsClient(true);
+     }
+   }, []);
+  
+  
   return (
     <>
+     {isClient && (
       <div className="w-full sm:px-2 md:p-24 bg-white min-h-screen dark:bg-[#1D1D1F]">
         <div className="hidden md:block w-full">
           <div className="grid md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 gap-y-10 gap-x-10 ">
@@ -85,6 +97,7 @@ const Brain = () => {
           </div>
         </div>
       </div>
+     )}
     </>
   );
 };
