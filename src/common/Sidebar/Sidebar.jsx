@@ -176,7 +176,7 @@ const Sidebar = () => {
         <div
           className={`mt-auto flex flex-col space-y-8 pb-6 ${
             isOpen
-              ? "items-end lg:items-center"
+              ? "items-center lg:items-center px-3"
               : "sm:items-end md:items-start lg:items-center xl:items-center "
           }`}
         >
