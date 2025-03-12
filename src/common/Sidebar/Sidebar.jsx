@@ -202,7 +202,7 @@ const Sidebar = () => {
             </small>
           </button>
           <Link
-            href={"/"}
+            to={"/"}
             className={` p-2 rounded-full bg-white dark:bg-[#333333] shadow-logout-them flex items-center gap-x-4 sm:w-full  md:w-fit`}
           >
             <MdOutlineLogout className="text-black dark:text-white" size={25} />
