@@ -12,14 +12,16 @@ import { ROUTES_ENUM } from "../../constants/routes.constant";
 
 const Sidebar = () => {
   // const pathName = usePathname();
-  const location = useLocation();
-  const [isOpen, setIsOpen] = useState(false); // Collapsed by default
+  
   const [isMobile, setIsMobile] = useState(false);
+  const [isOpen, setIsOpen]=useState(false)
+  const location = useLocation();
+
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768); // Set mobile breakpoint
+      setIsMobile(window.innerWidth <= 768); 
     };
 
     handleResize();
@@ -98,7 +100,7 @@ const Sidebar = () => {
         onClick={(e) => e.stopPropagation()}
         onMouseEnter={!isMobile ? handleMouseEnter : undefined}
         onMouseLeave={!isMobile ? handleMouseLeave : undefined}
-        className={`fixed lg:relative top-0 left-0 min-h-screen h-full flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-40 
+        className={`sm:fixed md:fixed xl:static top-0 left-0 h-screen flex flex-col justify-between bg-[#F2F2F2] dark:bg-[#363536] text-white transition-all duration-300 z-40 
           ${
             isMobile || window.innerWidth <= 1024
               ? isOpen
@@ -200,7 +202,7 @@ const Sidebar = () => {
             </small>
           </button>
           <Link
-            to={"/"}
+            href={"/"}
             className={` p-2 rounded-full bg-white dark:bg-[#333333] shadow-logout-them flex items-center gap-x-4 sm:w-full  md:w-fit`}
           >
             <MdOutlineLogout className="text-black dark:text-white" size={25} />
