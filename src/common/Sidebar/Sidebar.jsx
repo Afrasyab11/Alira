@@ -12,16 +12,16 @@ import { ROUTES_ENUM } from "../../constants/routes.constant";
 
 const Sidebar = () => {
   // const pathName = usePathname();
-  
+
   const [isMobile, setIsMobile] = useState(false);
-  const [isOpen, setIsOpen]=useState(false)
+  const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 1024); 
+      setIsMobile(window.innerWidth <= 1024);
     };
 
     handleResize();
@@ -150,7 +150,7 @@ const Sidebar = () => {
               className={`flex items-center gap-x-3 dark:text-white bg-transparent dark:bg-transparent transition-all duration-300 
                 ${
                   location.pathname === item.link
-                    ? "!bg-[#292929] dark:text-white text-white"
+                    ? "!bg-[#292929] rounded-full  shrink-0 dark:text-white text-white"
                     : "dark:bg-transparent dark:text-white text-black"
                 } 
                 ${

@@ -1,11 +1,14 @@
-
 import React, { useState, useRef, useEffect } from "react";
 import { FiLoader } from "react-icons/fi";
 import { Icons } from "../../../assets/Icons";
 import { Image } from "../../../common/image/Image";
+import Platforms from "./components/Platforms";
+import UserMessage from "./components/UserMessage";
+import SystemMessage from "./components/SystemMessage";
 
 export default function ChatInterface() {
   const [isClient, setIsClient] = useState(false);
+  const [selectedPlatform, setSelectedPlatform] = useState("facebook");
   const [messages, setMessages] = useState([
     {
       id: "1",
@@ -19,17 +22,65 @@ export default function ChatInterface() {
 
   const chatContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
+
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsClient(true);
     }
   }, []);
-  
+
   useEffect(() => {
-      if (messagesEndRef.current) {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-      }
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
+
+  const generatePost = async (platform) => {
+    try {
+      const response = await fetch("http://0.0.0.0:8080/generate-post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          platform,
+          prompt: inputValue,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        const postMessage = {
+          id: Date.now().toString(),
+          content: data.caption,
+          sender: "assistant",
+          hashtags: data.hashtags,
+          platform: data.type === "post" ? data.platform : "",
+          type: data.type,
+          images: [
+            "/images/es1.avif",
+            "/images/es2.avif",
+            "/images/es3.avif",
+            "/images/es4.avif",
+          ],
+        };
+        console.log(postMessage);
+        setMessages((prev) => [...prev, postMessage]);
+      } else {
+        throw new Error("Failed to generate post");
+      }
+    } catch (error) {
+      console.error("Error generating post:", error);
+      const errorMessage = {
+        id: Date.now().toString(),
+        content:
+          "Sorry, I couldn't generate a post at this time. Please try again.",
+        sender: "assistant",
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    }
+  };
 
   const handleSendMessage = () => {
     if (inputValue.trim() === "") return;
@@ -44,15 +95,9 @@ export default function ChatInterface() {
     setInputValue("");
     setIsLoading(true);
 
-    setTimeout(() => {
-      const newAssistantMessage = {
-        content: "How are you?",
-        sender: "assistant",
-      };
-
-      setMessages((prev) => [...prev, newAssistantMessage]);
-      setIsLoading(false);
-    }, 1500);
+    // Generate post based on selected platform
+    generatePost(selectedPlatform);
+    setIsLoading(false);
   };
 
   const handleKeyDown = (e) => {
@@ -62,13 +107,17 @@ export default function ChatInterface() {
     }
   };
 
+  const handlePlatformChange = (platform) => {
+    setSelectedPlatform(platform);
+  };
+
   return (
-    <>
+    <div className="flex relative flex-col items-center justify-center bg-white min-h-screen dark:bg-[#1D1D1F]">
       {isClient && (
-        <div className="flex flex-col min-h-screen bg-white pt-24 dark:bg-[#1D1D1F]">
+        <div className="flex flex-col w-full max-w-5xl min-xh-screen bg-white py-10 dark:bg-[#1D1D1F] flex flex-col items-center justify-center">
           <div
             ref={chatContainerRef}
-            className="flex-1 overflow-y-auto p-4 space-y-10"
+            className="flex-1 overflow-y-auto min-h-[80vh] mb-16 py-5 px-5 bg-zinc-50 dark:bg-[#171717] w-full rounded-xl"
           >
             {messages.length === 1 && (
               <div className="flex justify-center">
@@ -78,71 +127,35 @@ export default function ChatInterface() {
               </div>
             )}
 
-            <div className="w-full hidden md:block">
-              {messages.length === 1 && (
-                <div className="flex flex-wrap md:justify-center gap-2 my-6">
-                  <button
-                    className="bg-white text-blue dark:bg-[#151515] dark:text-white px-6 py-8 shadow-chat-button-shadow rounded-xl"
-                    onClick={() => {
-                      setInputValue("Generate a contract for me");
-                      handleSendMessage();
-                    }}
-                  >
-                    Generate Contract
-                  </button>
-                  <button
-                    className="bg-white text-blue dark:bg-[#151515] dark:text-white px-6 py-8 shadow-chat-button-shadow rounded-xl"
-                    onClick={() => {
-                      setInputValue("Show me market trends");
-                      handleSendMessage();
-                    }}
-                  >
-                    Market Trends
-                  </button>
-                  <button
-                    className="bg-white text-blue dark:bg-[#151515] dark:text-white px-6 py-8 shadow-chat-button-shadow rounded-xl"
-                    onClick={() => {
-                      setInputValue("I want to schedule a viewing");
-                      handleSendMessage();
-                    }}
-                  >
-                    Schedule Viewing
-                  </button>
-                </div>
-              )}
-            </div>
             <div
               ref={chatContainerRef}
               id="chatContainer"
-              className="flex flex-col h-[34vh] overflow-y-scroll scrollbar-hide sm:px-2 md:px-40"
+              className="flex flex-col h-full overflow-y-scroll scrollbar-hide sm:px-2 "
             >
-              {messages?.map((message) => (
-                <div
-                  key={message?.id}
-                  className={`flex ${
-                    message.sender === "user"
-                      ? "justify-end items-start"
-                      : "justify-start items-end"
-                  }`}
-                >
-                  <div
-                    className={`sm:w-max-w-[80%] md:max-w-[50%] rounded-2xl px-4 py-2 text-3xl mb-4 ${
-                      message?.sender === "user"
-                        ? "justify-end py-2 text-base bg-[#454545] text-white rounded-tl-full rounded-br-full rounded-bl-full"
-                        : "justify-start py-2 text-black bg-[#F2F2F2] text-base rounded-br-full rounded-tr-full rounded-bl-full"
-                    }`}
-                  >
-                    <p>{message?.content}</p>
-                  </div>
-                </div>
-              ))}
+              {messages?.map((message) =>
+                message.sender === "user" ? (
+                  <UserMessage key={message.id} content={message.content} />
+                ) : (
+                  <SystemMessage
+                    key={message.id}
+                    content={message.content}
+                    hashtags={message.hashtags}
+                    images={message.images}
+                    platform={message.platform}
+                    type={message.type}
+                    user={{
+                      name: "John Doe",
+                      profilePicture: "/images/dp.png",
+                    }}
+                  />
+                )
+              )}
 
-              {/* Empty div to ensure scrolling works */}
               <div ref={messagesEndRef} />
             </div>
             {isLoading && (
               <div className="flex justify-start px-40">
-                <div className="bg-white dark:bg-transparent rounded-2xl px-4 py-3 max-w-[80%]">
+                <div className="bg-white dark:bg-transparent rounded-2xl px-4 py-3 max-w-full">
                   <div className="flex space-x-1">
                     <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse"></div>
                     <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse delay-150"></div>
@@ -153,8 +166,12 @@ export default function ChatInterface() {
             )}
           </div>
 
-          <div className="p-2 flex justify-center w-full gap-x-3 sm:px-2 md:px-40">
-            <div className="flex items-center gap-x-3 w-full rounded-full px-4">
+          <div className="py-2 flex rounded-t-3xl border-t border-zinc-50 dark:border-t-zinc-700 px-4 fixed bottom-0 pb-5 max-w-5xl z-[200] bg-zinc-100 dark:bg-[#1D1D1F]  justify-center w-full  w-full ">
+            <div className="flex items-center gap-x-3 w-full rounded-full ">
+              <Platforms
+                selectedPlatform={selectedPlatform}
+                onPlatformChange={handlePlatformChange}
+              />
               <input
                 type="text"
                 value={inputValue}
@@ -163,6 +180,7 @@ export default function ChatInterface() {
                 placeholder="Ask Anything"
                 className="flex-1 rounded-full bg-white text-black py-3 px-4 border-[1px] border-[#E2E8F0] dark:text-white dark:bg-[#171717] dark:border-[1px] dark:border-[#444649] focus:outline-none"
               />
+
               <button
                 onClick={handleSendMessage}
                 disabled={inputValue.trim() === "" || isLoading}
@@ -180,11 +198,8 @@ export default function ChatInterface() {
               </button>
             </div>
           </div>
-          <p className="dark:text-white text-dark text-center text-sm sm:px-6 md:px-0">
-            Alira can make mistakes. Please verify important information.
-          </p>
         </div>
       )}
-    </>
+    </div>
   );
 }
