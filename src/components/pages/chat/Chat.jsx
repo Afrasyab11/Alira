@@ -38,7 +38,7 @@ export default function ChatInterface() {
   const generatePost = async (platform) => {
     try {
       const response = await fetch(
-        "https://alira-server-1hwrv3sm8-aniques-projects-c600b352.vercel.app/generate-post",
+        "https://alira-server.vercel.app/generate-post",
         {
           method: "POST",
           headers: {
