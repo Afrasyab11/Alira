@@ -17,7 +17,7 @@ export default function Platforms({ selectedPlatform, onPlatformChange }) {
           <div
             className={`flex items-center space-x-2 p-2 rounded-full transition-colors ${
               selectedPlatform === "instagram"
-                ? "bg-gradient-to-r from-[#4f5bd5]  via-[#d62976] via-[#962fbf] to-[#fa7e1e] text-white"
+                ? "bg-gradient-to-r from-[#0071E3]  via-[#d62976] via-[#962fbf] to-[#fa7e1e] text-white"
                 : "bg-zinc-200/80 text-gray-700 dark:bg-zinc-800 dark:text-gray-300"
             }`}
           >

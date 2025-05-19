@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const ImageCarousel = ({ images = [] }) => {
+  console.log(images);
   // If no images provided, return null
   if (!images || images.length === 0) {
     return null;

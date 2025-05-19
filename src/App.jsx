@@ -8,6 +8,7 @@ import ChatInterface from "./components/pages/chat/Chat";
 import Brain from "./components/pages/brain/main";
 import Home from "./components/pages/landingPage";
 import { Auth } from "./components/auth/Index";
+import { Signup } from "./components/auth/signup/Signup";
 function App() {
   return (
     <BrowserRouter>
@@ -16,7 +17,9 @@ function App() {
         <Route path={ROUTES_ENUM.LOGIN} element={<AuthLayout />}>
           <Route index element={<Auth />} />
         </Route>
-
+        <Route path={ROUTES_ENUM.SIGNUP} element={<AuthLayout />}>
+          <Route index element={<Signup />} />
+        </Route>
         <Route path="/" element={<AppLayout />}>
           <Route path={ROUTES_ENUM.CHAT} element={<ChatInterface />} />
           <Route path={ROUTES_ENUM.BRAIN} element={<Brain />} />

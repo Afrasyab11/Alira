@@ -1,7 +1,7 @@
 export const ROUTES_ENUM = {
   ROOT: "/",
   LOGIN: "/login",
-  CHAT:"/chat",
+  SIGNUP: "/signup",
+  CHAT: "/chat",
   BRAIN: "/brain",
 };
-
