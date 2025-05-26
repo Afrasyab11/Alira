@@ -98,6 +98,7 @@ const SystemMessage = ({
   const [repurposedContent, setRepurposedContent] = useState(null);
   const textareaRef = useRef(null);
   const dropdownRef = useRef(null);
+  const [showFullContent, setShowFullContent] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -128,6 +129,14 @@ const SystemMessage = ({
         textareaRef.current.scrollHeight + "px";
     }
   };
+
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height =
+        textareaRef.current.scrollHeight + "px";
+    }
+  }, [editedContent, isEditing]);
 
   const handleSave = () => {
     const extractedHashtags = extractHashtags(editedContent);
@@ -218,7 +227,6 @@ const SystemMessage = ({
               value={editedContent}
               onChange={handleTextareaChange}
               className="w-full p-2 bg-transparent border-none focus:outline-none focus:ring-0 resize-none overflow-hidden"
-              rows={1}
               placeholder="Write your post content... Use # for hashtags"
             />
             <div className="flex gap-2 justify-end">
@@ -238,7 +246,23 @@ const SystemMessage = ({
           </div>
         ) : (
           <div className="group">
-            <p className="break-words whitespace-pre-wrap">{content}</p>
+            {content.length > 400 ? (
+              <>
+                <p className="break-words whitespace-pre-wrap">
+                  {showFullContent ? content : content.slice(0, 200) + "..."}
+                </p>
+                {!showFullContent && (
+                  <button
+                    className="text-blue underline text-sm mt-1 ml-1 hover:text-blue-700"
+                    onClick={() => setShowFullContent(true)}
+                  >
+                    Read more
+                  </button>
+                )}
+              </>
+            ) : (
+              <p className="break-words whitespace-pre-wrap">{content}</p>
+            )}
             {type === "post" && (
               <div className="flex items-center gap-2 flex-row absolute top-2 right-2 p-2">
                 <button

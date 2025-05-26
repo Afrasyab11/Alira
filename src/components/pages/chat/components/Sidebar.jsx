@@ -3,10 +3,13 @@ import { useDropzone } from "react-dropzone";
 import { FiUpload, FiX } from "react-icons/fi";
 import { supabase } from "../../../../lib/supabase";
 
-const Sidebar = ({ onImageSelect, selectedImages }) => {
-  const [uploadedImages, setUploadedImages] = useState([]);
+const Sidebar = ({
+  onImageSelect,
+  selectedImages,
+  uploadedImages = [],
+  onClose,
+}) => {
   const [isDragging, setIsDragging] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState({});
   const [session, setSession] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -74,7 +77,6 @@ const Sidebar = ({ onImageSelect, selectedImages }) => {
   console.log("Current session:", session);
   console.log("Selected images:", selectedImages);
   console.log("Uploaded images:", uploadedImages);
-  console.log("Upload progress:", uploadProgress);
 
   const createSlug = (filename) => {
     const nameWithoutExt = filename.replace(/\.[^/.]+$/, "");
@@ -222,87 +224,97 @@ const Sidebar = ({ onImageSelect, selectedImages }) => {
   };
 
   return (
-    <div className="fixed  w-80 rounded-2xl top-[20px] bottom-5 right-5 h-[100vh-20px] bg-gray-50 dark:bg-[#1D1D1F]/30 backdrop-blur-xl border-l border-gray-200 dark:border-gray-800 p-4 overflow-y-auto z-50 shadow-lg">
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-          Upload Images
-        </h2>
-        <div
-          {...getRootProps()}
-          className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
-            ${
-              isDragActive
-                ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
-                : "border-gray-300 dark:border-gray-700"
-            }
-            hover:border-blue-500 dark:hover:border-blue-500`}
+    <>
+      {/* Blur background overlay */}
+      <div className="fixed inset-0 z-40 backdrop-blur-sm " />
+      <div className="fixed w-80 rounded-2xl top-[20px] bottom-5 right-5 h-[100vh-20px] bg-white dark:bg-[#1D1D1F]/30 backdrop-blur-xl border border-gray-200 dark:border-gray-800 p-4 overflow-y-auto z-50 shadow-lg">
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 p-2 rounded-full bg-white/80 dark:bg-[#232323]/80 hover:bg-neutral-500 hover:text-white transition-colors z-50"
+          aria-label="Close sidebar"
         >
-          <input {...getInputProps()} />
-          <FiUpload className="mx-auto h-8 w-8 text-gray-400 dark:text-gray-500 mb-2" />
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {isDragActive
-              ? "Drop the images here..."
-              : "Drag & drop images here, or click to select"}
-          </p>
+          <FiX className="w-5 h-5" />
+        </button>
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            Upload Images
+          </h2>
+          <div
+            className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
+              border-gray-300 dark:border-gray-700
+              hover:border-blue-500 dark:hover:border-blue-500`}
+          >
+            <FiUpload className="mx-auto h-8 w-8 text-gray-400 dark:text-gray-500 mb-2" />
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Drag & drop images here, or drop on chat
+            </p>
+          </div>
+          {/* Stats: how many selected */}
+          <div className="mt-3 text-sm text-gray-700 dark:text-gray-300 text-right">
+            Selected {selectedImages.length}
+          </div>
         </div>
-      </div>
 
-      {isLoading ? (
-        <div className="flex items-center justify-center h-32">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-2 gap-4">
-          {[...uploadedImages].map((image) => (
-            <div
-              key={image.id}
-              className={`relative group aspect-square rounded-lg overflow-hidden transition-all duration-200
-                  ${
-                    selectedImages.includes(image.preview)
-                      ? "ring-4 ring-[#0071E3] ring-offset-2 dark:ring-offset-[#1D1D1F]"
-                      : ""
-                  }`}
-            >
-              <img
-                src={image.preview}
-                alt="Uploaded"
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-200 flex items-center justify-center">
-                <button
-                  onClick={() => handleImageSelect(image)}
-                  disabled={image.isUploading}
-                  className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                      ${
-                        selectedImages.includes(image.preview)
-                          ? "bg-[#0071E3] text-white"
-                          : "bg-white text-gray-900"
-                      } px-3 py-1 rounded-full text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed`}
-                >
-                  {image.isUploading
-                    ? "Uploading..."
-                    : selectedImages.includes(image.preview)
-                    ? "Selected"
-                    : "Select"}
-                </button>
-                <button
-                  onClick={() => removeImage(image.preview, image.path)}
-                  disabled={image.isUploading}
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-red-500 text-white p-1 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <FiX className="h-4 w-4" />
-                </button>
-              </div>
-              {image.isUploading && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700">
-                  <div className="h-full bg-[#0071E3] transition-all duration-300 animate-pulse" />
-                </div>
-              )}
+        {uploadedImages.length === 0 ? (
+          <div className="flex items-center justify-center h-32">
+            <div className="text-gray-400 dark:text-gray-600">
+              No images uploaded yet.
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-4">
+            {[...uploadedImages].map((image) => (
+              <div
+                key={image.id}
+                className={`relative group aspect-square rounded-lg overflow-hidden transition-all duration-200
+                    ${
+                      selectedImages.includes(image.preview)
+                        ? "ring-4 ring-[#0071e3b5] ring-offset-2 dark:ring-offset-[#1D1D1F]"
+                        : ""
+                    }`}
+              >
+                <img
+                  src={image.preview}
+                  alt="Uploaded"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-200 flex items-center justify-center">
+                  <button
+                    onClick={() => handleImageSelect(image)}
+                    disabled={image.isUploading}
+                    className={`opacity-0 group-hover:opacity-100 transition-opacity duration-200
+                        ${
+                          selectedImages.includes(image.preview)
+                            ? "bg-[#0071E3] text-white"
+                            : "bg-white text-gray-900"
+                        } px-3 py-1 rounded-full text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed`}
+                  >
+                    {image.isUploading
+                      ? "Uploading..."
+                      : selectedImages.includes(image.preview)
+                      ? "Selected"
+                      : "Select"}
+                  </button>
+                  <button
+                    onClick={() => removeImage(image.preview, image.path)}
+                    disabled={image.isUploading}
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-red-500 text-white p-1 rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <FiX className="h-4 w-4" />
+                  </button>
+                </div>
+                {image.isUploading && (
+                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700">
+                    <div className="h-full bg-[#0071E3] transition-all duration-300 animate-pulse" />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
