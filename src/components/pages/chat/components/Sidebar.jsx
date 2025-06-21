@@ -243,7 +243,7 @@ const Sidebar = ({
           <div
             className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-colors
               border-gray-300 dark:border-gray-700
-              hover:border-blue-500 dark:hover:border-blue-500`}
+              hover:border-blue dark:hover:border-blue`}
           >
             <FiUpload className="mx-auto h-8 w-8 text-gray-400 dark:text-gray-500 mb-2" />
             <p className="text-sm text-gray-600 dark:text-gray-400">

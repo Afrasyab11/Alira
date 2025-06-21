@@ -11,14 +11,16 @@ export const SocialIntegration = () => {
 
   return (
     <>
-      <p className="text-lg dark:text-white text-black hidden md:block ">Social Integrations</p>
+      <p className="text-lg dark:text-white text-black hidden md:block ">
+        Social Integrations
+      </p>
       <div className=" dark:bg-[#363536] border-[1px] border-[#EBEFF2] dark:border-[#575757] mt-4 flex flex-col space-y-5 p-6 rounded-2xl">
         <div className=" flex justify-between border-[1px] border-[#E2E8F0] dark:border-[#575757]   rounded-full px-4 py-3">
           <div className="flex gap-x-3">
             <Image
               src={Icons?.outlook}
               alt="outlook"
-              className="h-auto w-auto text-blue-500 dark:invert dark:brightness-0 dark:filter"
+              className="h-auto w-auto text-blue dark:invert dark:brightness-0 dark:filter"
             />
             <p className="dark:text-white text-black">Outlook</p>
           </div>
@@ -40,7 +42,7 @@ export const SocialIntegration = () => {
             <Image
               src={Icons?.meta}
               alt="outlook"
-              className="h-auto w-auto text-blue-500 dark:invert dark:brightness-0 dark:filter"
+              className="h-auto w-auto text-blue dark:invert dark:brightness-0 dark:filter"
             />
 
             {/* <Image src={Icons?.meta} alt="outlook" className="h-auto w-auto " /> */}

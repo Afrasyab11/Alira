@@ -59,7 +59,7 @@ export default function Platforms({ selectedPlatform, onPlatformChange }) {
           <div
             className={`flex items-center space-x-2 px-2 py-2 rounded-full  transition-colors ${
               selectedPlatform === "facebook"
-                ? "bg-blue text-white dark:bg-blue-600"
+                ? "bg-blue text-white dark:bg-blue"
                 : "bg-zinc-200/80 text-gray-700 dark:bg-zinc-800 dark:text-gray-300"
             }`}
           >

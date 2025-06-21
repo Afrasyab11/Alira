@@ -4,6 +4,7 @@ import { FaEarthEurope } from "react-icons/fa6";
 import { FiEdit2, FiCheck, FiX, FiMoreVertical } from "react-icons/fi";
 import ImageCarousel from "./ImageCarousel";
 import Modal from "./Modal";
+import ScheduleModal from "./ScheduleModal";
 
 const InstagramIcon = () => (
   <svg
@@ -99,6 +100,7 @@ const SystemMessage = ({
   const textareaRef = useRef(null);
   const dropdownRef = useRef(null);
   const [showFullContent, setShowFullContent] = useState(false);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -152,6 +154,19 @@ const SystemMessage = ({
     setIsEditing(false);
   };
 
+  const getPlatformColor = () => {
+    switch (platform) {
+      case "instagram":
+        return "bg-gradient-to-r from-[#0071E3] via-[#d62976] via-[#962fbf] to-[#fa7e1e]";
+      case "facebook":
+        return "bg-blue";
+      case "linkedin":
+        return "bg-[#0e76a8]";
+      default:
+        return "bg-black";
+    }
+  };
+
   const handlePlatformChange = async () => {
     if (!newPrompt.trim()) return;
 
@@ -179,23 +194,6 @@ const SystemMessage = ({
       setNewPrompt("");
       setRepurposedContent(null);
     }
-  };
-
-  const getPlatformColor = () => {
-    switch (platform) {
-      case "instagram":
-        return "bg-gradient-to-r from-[#0071E3] via-[#d62976] via-[#962fbf] to-[#fa7e1e]";
-      case "facebook":
-        return "bg-blue";
-      case "linkedin":
-        return "bg-[#0e76a8]";
-      default:
-        return "bg-black";
-    }
-  };
-
-  const getInstagramGradientText = () => {
-    return "bg-clip-text text-transparent bg-gradient-to-r from-[#0071E3] via-[#d62976] via-[#962fbf] to-[#fa7e1e]";
   };
 
   return (
@@ -288,6 +286,15 @@ const SystemMessage = ({
                         className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                       >
                         Edit Post
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsDropdownOpen(false);
+                          setShowScheduleModal(true);
+                        }}
+                        className="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                      >
+                        Schedule Post
                       </button>
                     </div>
                   )}
@@ -382,6 +389,13 @@ const SystemMessage = ({
           )}
         </div>
       </Modal>
+
+      <ScheduleModal
+        isOpen={showScheduleModal}
+        onClose={() => setShowScheduleModal(false)}
+        content={editedContent}
+        images={images}
+      />
     </div>
   );
 };

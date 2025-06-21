@@ -434,7 +434,7 @@ export default function ChatInterface() {
       {isDragOver && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center backdrop-blur-md bg-black/30 pointer-events-none">
           <div className="flex flex-col items-center justify-center bg-white/80 dark:bg-[#171717]/80 rounded-2xl p-10 shadow-2xl border border-gray-200 dark:border-gray-700 pointer-events-auto">
-            <FiUpload className="text-5xl text-blue-500 mb-4" />
+            <FiUpload className="text-5xl text-blue mb-4" />
             <span className="text-2xl font-semibold text-gray-900 dark:text-white">
               Drop it here
             </span>
@@ -517,7 +517,7 @@ export default function ChatInterface() {
                             className="relative w-12 h-12 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700 bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center"
                           >
                             {uploaded && uploaded.isUploading ? (
-                              <FiLoader className="animate-spin text-blue-500 w-6 h-6" />
+                              <FiLoader className="animate-spin text-blue w-6 h-6" />
                             ) : (
                               <img
                                 src={img}
@@ -577,7 +577,7 @@ export default function ChatInterface() {
                       className={`flex items-center justify-center size-8 bg-black cursor-pointer rounded-full ${
                         inputValue.trim() === "" || isLoading
                           ? "text-gray-500"
-                          : "text-blue-500 hover:bg-blue-500 hover:text-white"
+                          : "text-blue hover:bg-blue hover:text-white"
                       } transition-colors`}
                     >
                       {isLoading ? (

@@ -4,4 +4,5 @@ export const ROUTES_ENUM = {
   SIGNUP: "/signup",
   CHAT: "/chat",
   BRAIN: "/brain",
+  INTEGRATIONS: "/integrations",
 };
