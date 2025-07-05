@@ -87,7 +87,7 @@ export default function ChatInterface() {
       });
 
       const apiEndpoint =
-        process.env.NODE_ENV === "production"
+        import.meta.env.MODE === "production"
           ? "https://alira-server.vercel.app/generate-post"
           : "http://localhost:8080/generate-post";
 
@@ -152,7 +152,7 @@ export default function ChatInterface() {
       });
 
       const apiEndpoint =
-        process.env.NODE_ENV === "production"
+        import.meta.env.MODE === "production"
           ? "https://alira-server.vercel.app/generate-post"
           : "http://localhost:8080/generate-post";
 
