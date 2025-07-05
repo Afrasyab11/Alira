@@ -8,6 +8,7 @@ import { IoMoonOutline } from "react-icons/io5";
 import { Link, useLocation } from "react-router-dom";
 // import { usePathname } from "next/navigation";
 import { PiBrain } from "react-icons/pi";
+import { FaPlug } from "react-icons/fa";
 import { ROUTES_ENUM } from "../../constants/routes.constant";
 
 const Sidebar = () => {
@@ -42,7 +43,13 @@ const Sidebar = () => {
       name: "Brain",
       link: ROUTES_ENUM?.BRAIN,
     },
-    { id: 3, icon: <CiSettings size={20} />, name: "Settings", link: "#" },
+    {
+      id: 3,
+      icon: <FaPlug size={20} />,
+      name: "Integrations",
+      link: "/integrations",
+    },
+    { id: 4, icon: <CiSettings size={20} />, name: "Settings", link: "#" },
   ];
 
   useEffect(() => {

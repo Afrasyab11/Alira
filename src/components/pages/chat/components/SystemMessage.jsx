@@ -395,6 +395,7 @@ const SystemMessage = ({
         onClose={() => setShowScheduleModal(false)}
         content={editedContent}
         images={images}
+        platform={platform}
       />
     </div>
   );

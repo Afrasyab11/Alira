@@ -64,8 +64,9 @@ export default function ChatInterface() {
 
   const handlePlatformChange = async (prompt) => {
     try {
-      // Get the last 10 messages for context
+      setIsLoading(true); // Set loading state for platform changes
 
+      // Get the last 10 messages for context
       console.log("prompt", prompt);
       const lastMessages = messages.slice(-10).map((msg) => {
         // Flatten all images for this message
@@ -125,6 +126,8 @@ export default function ChatInterface() {
     } catch (error) {
       console.error("Error generating post:", error);
       throw error;
+    } finally {
+      setIsLoading(false); // Clear loading state
     }
   };
 
@@ -215,9 +218,10 @@ export default function ChatInterface() {
     setInputValue("");
     setIsLoading(true);
 
-    // Generate post without passing platform
-    generatePost();
-    setIsLoading(false);
+    // Generate post and handle loading state properly
+    generatePost().finally(() => {
+      setIsLoading(false);
+    });
   };
 
   const handleKeyDown = (e) => {
@@ -489,12 +493,20 @@ export default function ChatInterface() {
                 <div ref={messagesEndRef} />
               </div>
               {isLoading && (
-                <div className="flex justify-start px-40">
-                  <div className="bg-white dark:bg-transparent rounded-2xl px-4 py-3 max-w-full">
-                    <div className="flex space-x-1">
-                      <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse"></div>
-                      <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse delay-150"></div>
-                      <div className="w-2 h-2 bg-dark dark:bg-white rounded-full animate-pulse delay-300"></div>
+                <div className="flex justify-start">
+                  <div className=" dark:bg-zinc-800 rounded-2xl px-6 py-4 max-w-full shadow-sm border border-zinc-200 dark:border-zinc-700">
+                    <div className="flex items-center gap-2">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-blue rounded-full animate-bounce"></div>
+                        <div
+                          className="w-2 h-2 bg-blue rounded-full animate-bounce"
+                          style={{ animationDelay: "0.1s" }}
+                        ></div>
+                        <div
+                          className="w-2 h-2 bg-blue rounded-full animate-bounce"
+                          style={{ animationDelay: "0.2s" }}
+                        ></div>
+                      </div>
                     </div>
                   </div>
                 </div>

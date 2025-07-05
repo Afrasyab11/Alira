@@ -10,30 +10,69 @@ const FacebookCallback = () => {
 
   useEffect(() => {
     const exchangeCodeForToken = async () => {
+      console.log("📘 Facebook Callback: Starting OAuth callback process...");
+
       const code = searchParams.get("code");
       const state = searchParams.get("state");
       const storedState = sessionStorage.getItem("facebook_auth_state");
 
+      console.log("🔍 Facebook Callback: URL Parameters:", {
+        code: code ? `${code.substring(0, 10)}...` : null,
+        state: state ? `${state.substring(0, 10)}...` : null,
+      });
+      console.log(
+        "🔐 Facebook Callback: Stored state:",
+        storedState ? `${storedState.substring(0, 10)}...` : null
+      );
+
       if (!code || !state || state !== storedState) {
+        console.error("❌ Facebook Callback: Invalid authentication request");
+        console.error("🔍 Facebook Callback: State validation failed:", {
+          hasCode: !!code,
+          hasState: !!state,
+          stateMatch: state === storedState,
+        });
         setError("Invalid authentication request. Please try again.");
         sessionStorage.removeItem("facebook_auth_state");
         return;
       }
 
+      console.log("✅ Facebook Callback: State validation successful");
       sessionStorage.removeItem("facebook_auth_state");
+      console.log(
+        "🗑️ Facebook Callback: Cleared stored state from sessionStorage"
+      );
 
       try {
+        console.log(
+          "🔐 Facebook Callback: Getting current Supabase session..."
+        );
         const {
           data: { session },
           error: sessionError,
         } = await supabase.auth.getSession();
 
         if (sessionError || !session) {
+          console.error(
+            "❌ Facebook Callback: No active session found:",
+            sessionError
+          );
           throw new Error("User not authenticated. Please log in again.");
         }
 
+        console.log(
+          "✅ Facebook Callback: Session found for user:",
+          session.user.id
+        );
+
+        console.log(
+          "🔄 Facebook Callback: Exchanging code for access token..."
+        );
         const backendUrl =
           import.meta.env.VITE_BACKEND_URL || "http://localhost:8080";
+
+        console.log("🌐 Facebook Callback: Backend URL:", backendUrl);
+
         const response = await fetch(`${backendUrl}/auth/facebook/callback`, {
           method: "POST",
           headers: {
@@ -43,22 +82,48 @@ const FacebookCallback = () => {
           body: JSON.stringify({ code, userId: session.user.id }),
         });
 
+        console.log(
+          "📡 Facebook Callback: Backend response status:",
+          response.status
+        );
+
         const data = await response.json();
+        console.log("📦 Facebook Callback: Backend response data:", data);
 
         if (response.ok) {
+          console.log(
+            "🎉 Facebook Callback: Successfully connected Facebook account!"
+          );
+          console.log("⏰ Facebook Callback: Setting redirect timer...");
           setMessage("Successfully connected to Facebook! Redirecting...");
           setTimeout(() => {
+            console.log(
+              "🔄 Facebook Callback: Redirecting to integrations page..."
+            );
             navigate("/integrations?facebook-connected=true");
           }, 2000);
         } else {
+          console.error(
+            "❌ Facebook Callback: Failed to connect Facebook account:",
+            data.message
+          );
           throw new Error(data.message || "Failed to connect to Facebook.");
         }
       } catch (err) {
+        console.error("💥 Facebook Callback: Unexpected error:", err);
+        console.error("🔍 Facebook Callback: Error details:", {
+          message: err.message,
+          stack: err.stack,
+          name: err.name,
+        });
         setError(err.message);
         setMessage("");
       }
     };
 
+    console.log(
+      "🚀 Facebook Callback: Component mounted, starting callback process"
+    );
     exchangeCodeForToken();
   }, [searchParams, navigate]);
 
