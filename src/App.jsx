@@ -11,7 +11,7 @@ import { Auth } from "./components/auth/Index";
 import { Signup } from "./components/auth/signup/Signup";
 import Integrations from "./components/pages/integrations/Integrations";
 import FacebookCallback from "./components/pages/integrations/FacebookCallback";
-import InstagramCallback from "./components/pages/Integrations/InstagramCallback";
+import InstagramCallback from "./components/pages/integrations/InstagramCallback";
 import LinkedInCallback from "./components/pages/integrations/LinkedInCallback";
 import ManageFacebook from "./components/pages/integrations/ManageFacebook";
 import ManageInstagram from "./components/pages/integrations/ManageInstagram";
